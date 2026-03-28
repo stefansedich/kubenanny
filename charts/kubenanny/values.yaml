@@ -1,0 +1,62 @@
+image:
+  repository: kubenanny
+  tag: latest
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+# Host networking is required to attach TC programs to pod veth interfaces.
+hostNetwork: true
+dnsPolicy: ClusterFirstWithHostNet
+
+# Tolerate all taints so the DaemonSet runs on every node.
+tolerations:
+  - operator: Exists
+
+nodeSelector: {}
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi
+
+# Prometheus metrics configuration.
+metrics:
+  enabled: true
+  port: 9090
+  serviceMonitor:
+    enabled: false
+    namespace: ""
+    interval: 30s
+    labels: {}
+
+# Health/metrics server configuration.
+# healthBindAddress restricts which interface the health/metrics server listens
+# on. Set to "0.0.0.0" to expose on all interfaces (less secure with hostNetwork).
+healthBindAddress: "127.0.0.1"
+healthPort: 9090
+
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+podAnnotations: {}
+podLabels: {}
+
+# SecurityContext — eBPF requires specific capabilities.
+# Must run as root (UID 0) for BPF syscall access.
+securityContext:
+  privileged: true
+  runAsUser: 0
+  capabilities:
+    add:
+      - SYS_ADMIN
+      - NET_ADMIN
+      - BPF
+      - PERFMON

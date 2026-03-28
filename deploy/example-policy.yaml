@@ -1,0 +1,15 @@
+# Example: Allow a workload to only reach api.github.com and httpbin.org.
+apiVersion: policy.kubenanny.io/v1alpha1
+kind: EgressPolicy
+metadata:
+  name: allow-github-only
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: my-app
+  allowedHostnames:
+    - api.github.com
+    - github.com
+    - httpbin.org
+  defaultAction: deny

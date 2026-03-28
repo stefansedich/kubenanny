@@ -1,0 +1,13 @@
+# Test pod to verify egress filtering. Label matches the example EgressPolicy.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-egress
+  namespace: default
+  labels:
+    app: my-app
+spec:
+  containers:
+    - name: curl
+      image: curlimages/curl:latest
+      command: ["sleep", "3600"]

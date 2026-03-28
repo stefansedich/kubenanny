@@ -1,0 +1,18 @@
+apiVersion: v2
+name: kubenanny
+description: eBPF-based Kubernetes egress hostname filter
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+kubeVersion: ">=1.31.0-0"
+keywords:
+  - ebpf
+  - egress
+  - network-policy
+  - security
+  - kubernetes
+home: https://github.com/stefansedich/kubenanny
+sources:
+  - https://github.com/stefansedich/kubenanny
+maintainers:
+  - name: Stefan Sedich
